@@ -1273,7 +1273,7 @@
       <button class="btn btn-primary" id="btnOpenAdd" title="Add Attendee (Shortcut: A)">
         + Add Attendee
       </button>
-      <button class="btn" id="btnOpenDrawer" title="Undo, Entry Log, Speed, Export/Import & Reset">
+      <button class="btn" id="btnOpenDrawer" title="Undo, Entry Log, Speed & Export/Import">
         ☰ Log &amp; Tools
       </button>
     </div>
@@ -1419,9 +1419,8 @@
 
       <div class="drawer-section">
         <span class="form-label">Quick Actions</span>
-        <div class="tool-grid">
-          <button type="button" class="btn" id="btnUndoLast">↩ Undo Last</button>
-          <button type="button" class="btn btn-danger" id="btnResetSession">Reset Session</button>
+        <div style="margin-top:8px;">
+          <button type="button" class="btn" id="btnUndoLast" style="width:100%;">↩ Undo Last Entry</button>
         </div>
       </div>
 
@@ -2483,12 +2482,7 @@
     }
 
     // ===== LOG & HOST TOOLS DRAWER =====
-    let resetConfirmPending = false;
-    let resetConfirmTimer = null;
-
     function openDrawer() {
-      resetConfirmPending = false;
-      updateResetButton();
       updateSpeedPills();
       renderLog();
       document.getElementById("toolsDrawer").classList.add("open");
@@ -2502,11 +2496,6 @@
       document.querySelectorAll(".speed-pill").forEach(btn => {
         btn.classList.toggle("active", Number(btn.getAttribute("data-sec")) === appState.slideSeconds);
       });
-    }
-
-    function updateResetButton() {
-      const btn = document.getElementById("btnResetSession");
-      btn.textContent = resetConfirmPending ? "Confirm Wipe?" : "Reset Session";
     }
 
     function renderLog() {
@@ -2632,27 +2621,6 @@
     });
 
     document.getElementById("btnUndoLast").addEventListener("click", undoLastEntry);
-    document.getElementById("btnResetSession").addEventListener("click", () => {
-      if (!resetConfirmPending) {
-        resetConfirmPending = true;
-        updateResetButton();
-        clearTimeout(resetConfirmTimer);
-        resetConfirmTimer = setTimeout(() => {
-          resetConfirmPending = false;
-          updateResetButton();
-        }, 4500);
-      } else {
-        appState.entries = [];
-        appState.usedTrivia = {};
-        saveState();
-        wipeCloudState(appState.lastAutoResetAt || 0);
-        resetConfirmPending = false;
-        updateResetButton();
-        renderAll();
-        closeDrawer();
-      }
-    });
-
     document.querySelectorAll(".speed-pill").forEach(btn => {
       btn.addEventListener("click", () => {
         appState.slideSeconds = Number(btn.getAttribute("data-sec"));
