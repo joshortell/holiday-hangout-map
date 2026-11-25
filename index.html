@@ -1682,23 +1682,33 @@
     }
 
     let cloudHydrated = false;
+    let pullInFlight = false;
+    let pendingWrites = 0;
+
     async function pullFromCloud() {
-      if (!isCloudSyncEnabled()) return;
+      if (!isCloudSyncEnabled() || pullInFlight || pendingWrites > 0) return;
+      pullInFlight = true;
       try {
         const data = await fbRequest("", "GET");
-        applyCloudSnapshot(data || {});
-        cloudHydrated = true;
+        if (pendingWrites === 0) {
+          applyCloudSnapshot(data || {});
+          cloudHydrated = true;
+        }
         setSyncBadge(true, "Live Sync");
         checkScheduledReset(false);
       } catch (err) {
         console.warn("Cloud sync fetch failed:", err);
         setSyncBadge(false, "Reconnecting...");
+      } finally {
+        pullInFlight = false;
       }
     }
 
+    let cloudSyncStarted = false;
     let cloudEventSource = null;
     function startCloudSync() {
-      if (!isCloudSyncEnabled()) return;
+      if (!isCloudSyncEnabled() || cloudSyncStarted) return;
+      cloudSyncStarted = true;
       setSyncBadge(true, "Connecting...");
       pullFromCloud();
 
@@ -1723,19 +1733,24 @@
 
     function pushEntryToCloud(entry, usedArea, usedIdx) {
       if (!isCloudSyncEnabled()) return;
-      fbRequest(`/entries/${encodeURIComponent(entry.id)}`, "PUT", entry)
-        .then(() => setSyncBadge(true, "Live Sync"))
-        .catch(() => setSyncBadge(false, "Sync Error"));
+      pendingWrites += 1;
+      const reqs = [fbRequest(`/entries/${encodeURIComponent(entry.id)}`, "PUT", entry)];
       if (usedArea && typeof usedIdx === "number") {
-        fbRequest(`/usedTrivia/${encodeURIComponent(usedArea)}/${usedIdx}`, "PUT", true).catch(() => {});
+        reqs.push(fbRequest(`/usedTrivia/${encodeURIComponent(usedArea)}/${usedIdx}`, "PUT", true));
       }
+      Promise.all(reqs)
+        .then(() => setSyncBadge(true, "Live Sync"))
+        .catch(() => setSyncBadge(false, "Sync Error"))
+        .finally(() => { pendingWrites = Math.max(0, pendingWrites - 1); });
     }
 
     function deleteEntryFromCloud(entryId) {
       if (!isCloudSyncEnabled()) return;
+      pendingWrites += 1;
       fbRequest(`/entries/${encodeURIComponent(entryId)}`, "DELETE")
         .then(() => setSyncBadge(true, "Live Sync"))
-        .catch(() => setSyncBadge(false, "Sync Error"));
+        .catch(() => setSyncBadge(false, "Sync Error"))
+        .finally(() => { pendingWrites = Math.max(0, pendingWrites - 1); });
     }
 
     function wipeCloudState(resetTimestamp = 0, preserveTrivia = false) {
@@ -2276,8 +2291,7 @@
           goToSlide(currentSlide + 1);
         }
       }
-      startCloudSync();
-    requestAnimationFrame(tickSlideshow);
+      requestAnimationFrame(tickSlideshow);
     }
 
     // ===== ADD ATTENDEE MODAL =====
@@ -2715,6 +2729,7 @@
     initMapSvg();
     updateSpeedPills();
     renderAll();
+    startCloudSync();
     setInterval(() => checkScheduledReset(false), 1000);
     requestAnimationFrame(tickSlideshow);
   </script>
