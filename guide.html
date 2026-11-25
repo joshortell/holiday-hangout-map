@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Host Guide — Holiday Hangout Meet Map &amp; Pets</title>
-  <meta name="description" content="Quick 45-second video walkthrough and cheat sheet for operating the Holiday Hangout Meet Map & Pets app." />
+  <meta name="description" content="Quick walkthrough video and cheat sheet for operating the Holiday Hangout Meet Map & Pets live app." />
   <style>
     :root {
       --bg: #f6f5f1;
@@ -28,7 +28,7 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 18px;
     }
     .header {
       display: flex;
@@ -62,6 +62,47 @@
       transition: background 0.15s ease;
     }
     .btn:hover { background: var(--accent-hover); }
+    .url-banner {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      border-radius: 16px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .url-banner-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #166534;
+    }
+    .url-link {
+      font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+      font-weight: 800;
+      color: #14532d;
+      word-break: break-all;
+    }
+    .url-hint {
+      font-size: 0.88rem;
+      color: #166534;
+      margin-top: 2px;
+    }
+    .sync-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #166534;
+      padding: 2px 9px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.88em;
+    }
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -85,7 +126,7 @@
       padding-left: 22px;
       display: flex;
       flex-direction: column;
-      gap: 9px;
+      gap: 10px;
       font-size: 1rem;
     }
     li strong { color: var(--ink); }
@@ -112,30 +153,38 @@
     <header class="header">
       <div>
         <h1>Host Guide — Meet Map &amp; Pets</h1>
-        <p class="subtitle">45-second walkthrough for Thanksgiving &amp; Christmas hosts</p>
+        <p class="subtitle">Quick walkthrough video &amp; cheat sheet for Thanksgiving &amp; Christmas hosts</p>
       </div>
-      <a class="btn" href="./">Open Live App &rarr;</a>
+      <a class="btn" href="https://joshortell.github.io/holiday-hangout-map/">Open Live App &rarr;</a>
     </header>
+
+    <section class="url-banner">
+      <div>
+        <div class="url-banner-label">Live App URL (Bookmark &amp; Use This Exact Link)</div>
+        <a class="url-link" href="https://joshortell.github.io/holiday-hangout-map/">https://joshortell.github.io/holiday-hangout-map/</a>
+        <div class="url-hint">Always open this web link (not a downloaded file) and check for the green <span class="sync-tag">&#9679; Live Sync &#10003;</span> badge at the top.</div>
+      </div>
+    </section>
 
     <section class="card">
       <video controls playsinline preload="metadata">
-        <source src="host-guide-video.mp4" type="video/mp4" />
-        Your browser does not support HTML5 video. <a href="host-guide-video.mp4">Download the video here</a>.
+        <source src="host-guide-video.mp4?v=2" type="video/mp4" />
+        Your browser does not support HTML5 video. <a href="host-guide-video.mp4?v=2">Download the video here</a>.
       </video>
     </section>
 
     <section class="card">
       <h2>Quick Host Cheat Sheet</h2>
       <ol>
-        <li><strong>Open &amp; Share:</strong> Open the <a href="./">Live App</a> and share that browser tab in Google Meet.</li>
+        <li><strong>Open &amp; Verify Sync:</strong> Go to <a href="https://joshortell.github.io/holiday-hangout-map/"><strong>https://joshortell.github.io/holiday-hangout-map/</strong></a>, confirm the green <span class="sync-tag">&#9679; Live Sync &#10003;</span> badge appears at the top, and share that browser tab in Google Meet.</li>
         <li><strong>Add an Attendee:</strong> Click <strong>+ Add Attendee</strong> (or press <code>A</code>) — or click any <strong>US State</strong>, <strong>D.C. &amp; US Territories</strong>, or <strong>International</strong> directly on the map.</li>
         <li><strong>Enter Pets:</strong> Tap <strong>+</strong> for Dogs, Cats, Birds, Fish, or Other Pets, then click <strong>Add &amp; Show Trivia</strong>.</li>
         <li><strong>Trivia Time:</strong> Read the question aloud, click <strong>Reveal Answer</strong> (or press <code>Space</code>), then click <strong>Continue Slideshow</strong>.</li>
         <li><strong>Auto-Rotating Views:</strong> The <strong>Map</strong>, <strong>Pets</strong>, and <strong>Leaderboard</strong> rotate every 10 seconds automatically. Click any tab (or press <code>1</code>, <code>2</code>, <code>3</code>) or <strong>Pause</strong> anytime.</li>
-        <li><strong>Fix Typos:</strong> Click <strong>&#9776; Log &amp; Tools</strong> to <strong>Undo Last</strong>, delete a specific entry, or change the slideshow speed.</li>
+        <li><strong>Fix Typos:</strong> Click <strong>&#9776; Log &amp; Tools</strong> to <strong>Undo Last</strong>, delete a specific entry, or adjust the slideshow speed.</li>
       </ol>
       <div class="note">
-        <strong>Practice &amp; Live Sync:</strong> Feel free to practice right now! All open hosts stay synced automatically in real time. All practice data &amp; trivia will automatically clear at <strong>12:50 PM ET on Thanksgiving Day</strong> (10 minutes before the 1:00 PM ET start). On Christmas Day at 12:50 PM ET, counts clear automatically while keeping Thanksgiving's trivia marked used so questions won't repeat.
+        <strong>Practice &amp; Automatic Holiday Resets:</strong> Practice anytime! All open hosts stay synced automatically in real time. All practice data &amp; trivia will automatically clear at <strong>12:50 PM ET on Thanksgiving Day</strong> (10 minutes before the 1:00 PM ET start). On <strong>Christmas Day at 12:50 PM ET</strong>, attendee &amp; pet counts clear automatically while keeping Thanksgiving's trivia marked used so questions won't repeat.
       </div>
     </section>
   </main>
