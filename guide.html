@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Host Guide — Holiday Hangout Meet Map &amp; Pets</title>
+  <meta name="description" content="Quick 45-second video walkthrough and cheat sheet for operating the Holiday Hangout Meet Map & Pets app." />
+  <style>
+    :root {
+      --bg: #f6f5f1;
+      --surface: #ffffff;
+      --border: #e4e1da;
+      --ink: #18181b;
+      --muted: #52525b;
+      --accent: #ea580c;
+      --accent-hover: #c2410c;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+      padding: 20px 16px 48px;
+    }
+    .wrap {
+      max-width: 920px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    h1 {
+      font-size: clamp(1.35rem, 2.5vw, 1.9rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.98rem;
+      margin-top: 2px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 11px 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(234, 88, 12, 0.25);
+      transition: background 0.15s ease;
+    }
+    .btn:hover { background: var(--accent-hover); }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: clamp(14px, 2.5vw, 24px);
+      box-shadow: 0 8px 24px rgba(24, 24, 27, 0.06);
+    }
+    video {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: #18181b;
+      display: block;
+    }
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    ol {
+      padding-left: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      font-size: 1rem;
+    }
+    li strong { color: var(--ink); }
+    .note {
+      margin-top: 14px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.94rem;
+      font-weight: 600;
+    }
+    code {
+      background: #f4f4f5;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <header class="header">
+      <div>
+        <h1>Host Guide — Meet Map &amp; Pets</h1>
+        <p class="subtitle">45-second walkthrough for Thanksgiving &amp; Christmas hosts</p>
+      </div>
+      <a class="btn" href="./">Open Live App &rarr;</a>
+    </header>
+
+    <section class="card">
+      <video controls playsinline preload="metadata">
+        <source src="host-guide-video.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video. <a href="host-guide-video.mp4">Download the video here</a>.
+      </video>
+    </section>
+
+    <section class="card">
+      <h2>Quick Host Cheat Sheet</h2>
+      <ol>
+        <li><strong>Open &amp; Share:</strong> Open the <a href="./">Live App</a> and share that browser tab in Google Meet.</li>
+        <li><strong>Add an Attendee:</strong> Click <strong>+ Add Attendee</strong> (or press <code>A</code>) — or click any <strong>US State</strong>, <strong>D.C. &amp; US Territories</strong>, or <strong>International</strong> directly on the map.</li>
+        <li><strong>Enter Pets:</strong> Tap <strong>+</strong> for Dogs, Cats, Birds, Fish, or Other Pets, then click <strong>Add &amp; Show Trivia</strong>.</li>
+        <li><strong>Trivia Time:</strong> Read the question aloud, click <strong>Reveal Answer</strong> (or press <code>Space</code>), then click <strong>Continue Slideshow</strong>.</li>
+        <li><strong>Auto-Rotating Views:</strong> The <strong>Map</strong>, <strong>Pets</strong>, and <strong>Leaderboard</strong> rotate every 10 seconds automatically. Click any tab (or press <code>1</code>, <code>2</code>, <code>3</code>) or <strong>Pause</strong> anytime.</li>
+        <li><strong>Fix Typos:</strong> Click <strong>&#9776; Log &amp; Tools</strong> to <strong>Undo Last</strong>, delete a specific entry, or change the slideshow speed.</li>
+      </ol>
+      <div class="note">
+        <strong>Practice &amp; Live Sync:</strong> Feel free to practice right now! All open hosts stay synced automatically in real time. All practice data &amp; trivia will automatically clear at <strong>12:50 PM ET on Thanksgiving Day</strong> (10 minutes before the 1:00 PM ET start). On Christmas Day at 12:50 PM ET, counts clear automatically while keeping Thanksgiving's trivia marked used so questions won't repeat.
+      </div>
+    </section>
+  </main>
+</body>
+</html>
