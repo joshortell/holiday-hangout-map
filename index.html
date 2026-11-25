@@ -1644,14 +1644,21 @@
       if (!isCloudSyncEnabled()) return null;
       const bust = method === "GET" ? `?t=${Date.now()}` : "";
       const url = `${FIREBASE_DB_URL}/${FB_ROOT}${path}.json${bust}`;
+      const controller = typeof AbortController !== "undefined" ? new AbortController() : null;
+      const timer = controller ? setTimeout(() => controller.abort(), 6000) : null;
       const opts = { method, headers: {}, cache: "no-store" };
+      if (controller) opts.signal = controller.signal;
       if (body !== undefined) {
         opts.headers["Content-Type"] = "application/json";
         opts.body = JSON.stringify(body);
       }
-      const res = await fetch(url, opts);
-      if (!res.ok) throw new Error(`Firebase HTTP ${res.status}`);
-      return res.json();
+      try {
+        const res = await fetch(url, opts);
+        if (!res.ok) throw new Error(`Firebase HTTP ${res.status}`);
+        return await res.json();
+      } finally {
+        if (timer) clearTimeout(timer);
+      }
     }
 
     function applyCloudSnapshot(data) {
@@ -1664,7 +1671,11 @@
       const normalizedUsed = {};
       for (const [area, val] of Object.entries(usedObj)) {
         if (Array.isArray(val)) {
-          normalizedUsed[area] = val.filter(x => typeof x === "number");
+          normalizedUsed[area] = val.reduce((acc, v, i) => {
+            if (v === true) acc.push(i);
+            else if (typeof v === "number") acc.push(v);
+            return acc;
+          }, []);
         } else if (val && typeof val === "object") {
           normalizedUsed[area] = Object.keys(val).map(Number).filter(n => !Number.isNaN(n));
         }
@@ -1719,16 +1730,20 @@
           cloudEventSource.addEventListener("open", () => setSyncBadge(true, "Live Sync ✓"));
           cloudEventSource.addEventListener("put", () => pullFromCloud());
           cloudEventSource.addEventListener("patch", () => pullFromCloud());
-          cloudEventSource.onerror = () => setSyncBadge(false, "Reconnecting...");
+          cloudEventSource.onerror = () => { if (!cloudHydrated) setSyncBadge(false, "Reconnecting..."); };
         } catch (e) {
           console.warn("SSE unavailable, using polling fallback");
         }
       }
 
-      // Gentle 5-second safety poll to stay synced even behind strict proxies
+      // Poll every 4 seconds + immediately when switching back to this tab or regaining network
+      window.addEventListener("online", () => pullFromCloud());
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") pullFromCloud();
+      });
       setInterval(() => {
         if (document.visibilityState !== "hidden") pullFromCloud();
-      }, 5000);
+      }, 4000);
     }
 
     function pushEntryToCloud(entry, usedArea, usedIdx) {
